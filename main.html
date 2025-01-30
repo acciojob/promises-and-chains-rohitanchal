@@ -1,13 +1,49 @@
 <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promise and Form Handling</title>
+</head>
+<body>
+    <form id="userForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name">
+        <br><br>
+        <label for="age">Age:</label>
+        <input type="number" id="age">
+        <br><br>
+        <button id="btn" type="submit">Submit</button>
+    </form>
 
-<html>
-  <head>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
+    <script>
+        document.getElementById("userForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent form from refreshing the page
 
-  <body>
-    <!-- write the body here -->
+            const name = document.getElementById("name").value.trim();
+            const age = document.getElementById("age").value.trim();
 
-    <script type="text/javascript" src="./script.js"></script>
-  </body>
+            if (!name || !age) {
+                alert("Please fill in all fields.");
+                return;
+            }
+
+            function checkAge(age, name) {
+                return new Promise((resolve, reject) => {
+                    setTimeout(() => {
+                        if (age >= 18) {
+                            resolve(`Welcome, ${name}. You can vote.`);
+                        } else {
+                            reject(`Oh sorry, ${name}. You aren't old enough.`);
+                        }
+                    }, 4000); // Delay of 4 seconds
+                });
+            }
+
+            checkAge(Number(age), name)
+                .then((message) => alert(message))
+                .catch((error) => alert(error));
+        });
+    </script>
+</body>
 </html>
