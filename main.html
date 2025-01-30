@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Promise and Form Handling</title>
+    <title>Promise Form Validation</title>
 </head>
 <body>
     <form id="userForm">
@@ -18,25 +18,25 @@
 
     <script>
         document.getElementById("userForm").addEventListener("submit", function(event) {
-            event.preventDefault(); // Prevent form from refreshing the page
+            event.preventDefault(); // Prevent page reload
 
             const name = document.getElementById("name").value.trim();
             const age = document.getElementById("age").value.trim();
 
-            if (!name || !age) {
-                alert("Please fill in all fields.");
+            if (!name || isNaN(Number(age)) || Number(age) < 0) {
+                alert("Please fill in all fields correctly.");
                 return;
             }
 
             function checkAge(age, name) {
                 return new Promise((resolve, reject) => {
                     setTimeout(() => {
-                        if (age >= 18) {
+                        if (Number(age) >= 18) {
                             resolve(`Welcome, ${name}. You can vote.`);
                         } else {
                             reject(`Oh sorry, ${name}. You aren't old enough.`);
                         }
-                    }, 4000); // Delay of 4 seconds
+                    }, 4000);
                 });
             }
 
