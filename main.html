@@ -3,42 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Promise Form Validation</title>
+    <title>Primise Validation Form</title>
 </head>
 <body>
-    <form id="userForm">
+    <form id="ageForm">
         <label for="name">Name:</label>
-        <input type="text" id="name">
+        <input type="text" id="name" name="name" />
         <br><br>
         <label for="age">Age:</label>
-        <input type="number" id="age">
-        <br><br>
-        <button id="btn" type="button">Submit</button>
+        <input type="number" id="age" name="age" />
+        <br>
+        <button type="submit" id="btn">Submit</button>
     </form>
 
     <script>
-        document.getElementById("btn").addEventListener("click", function() { 
-            const name = document.getElementById("name").value.trim();
-            const age = document.getElementById("age").value.trim();
+        document.getElementById("ageForm").addEventListener("submit", function(event) {
+            event.preventDefault();
 
-            if (!name || name.length === 0 || isNaN(Number(age)) || Number(age) <= 0) {
-                alert("Please fill in all fields correctly.");
+            let name = document.getElementById("name").value.trim();
+            let age = document.getElementById("age").value.trim();
+
+            if (!name || !age) {
+                alert("Please enter valid details.");
                 return;
             }
 
-            function checkAge(age, name) {
-                return new Promise((resolve, reject) => {
-                    setTimeout(() => {
-                        if (Number(age) >= 18) {
-                            resolve(`Welcome, ${name}. You can vote.`);
-                        } else {
-                            reject(`Oh sorry, ${name}. You aren't old enough.`);
-                        }
-                    }, 4000);
-                });
-            }
+            age = parseInt(age, 10);
 
-            checkAge(Number(age), name)
+            let agePromise = new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    if (age >= 18) {
+                        resolve(`Welcome, ${name}. You can vote.`);
+                    } else {
+                        reject(`Oh sorry ${name}. You aren't old enough.`);
+                    }
+                }, 4000); 
+            });
+
+            agePromise
                 .then((message) => alert(message))
                 .catch((error) => alert(error));
         });
