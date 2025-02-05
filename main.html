@@ -23,10 +23,11 @@
             let name = document.getElementById("name").value.trim();
             let age = document.getElementById("age").value.trim();
 
-            if (!name || !age) {
-                alert("Please enter valid details.");
-                return;
-            }
+           if (!name || !age) {
+    alert("Please enter valid details"); // Remove unnecessary spaces or punctuation
+    return;
+}
+
 
             age = parseInt(age, 10);
 
